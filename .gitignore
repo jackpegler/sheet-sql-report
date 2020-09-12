@@ -1,0 +1,6 @@
+# jupyter stuff
+/.ipynb_checkpoints
+
+# Distribution/packaging
+/dist
+/sheet_sql_report.egg-info
