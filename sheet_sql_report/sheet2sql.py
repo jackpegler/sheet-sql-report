@@ -25,6 +25,8 @@ class SheetToSQL():
         self.gc_credentials = google_cloud_credentials
         self.sql_connection = sql_connection
 
+    ### ADD FUNCTION TO ADD THE CONNECTION DETAILS THEN LET JUST ADD ONE/NEITHER IN INIT
+    ### SHOULD THE WHOLE THING JUST FULLY INHERIT FROM GSPREAD?
 
     def get_gheet_data(self, workbook_name, sheet_name, cell=False):
         """Method to connect to and grab data from the google sheet. If cell supplied grabs just that cell
