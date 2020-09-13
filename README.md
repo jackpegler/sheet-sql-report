@@ -29,3 +29,13 @@ To install simply use `pip install sheet-to-sql`
 Then to use in your project simply import using `import sheet_sql_report`
 
 ## How To:
+
+### Configure connection to datasources
+
+### Grab data from google Sheet
+
+### Grab data from sql
+
+### add data to google sheet
+
+### add data to sql 
