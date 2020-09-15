@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="sheet-sql-report", # Replace with your own username
-    version="0.0.2",
+    version="0.0.8",
     author="Jack Pegler",
     author_email="jackpegler@gmail.com",
     description="Python package to help users connect with google sheet and SQL data",
@@ -15,7 +15,8 @@ setup(
     packages=['sheet_sql_report'],
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License"
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent"
     ],
     python_requires='>=3.7.4',
     zip_safe=False

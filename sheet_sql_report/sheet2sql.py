@@ -18,9 +18,15 @@ class SheetToSQL():
             sql_connection (String) stores the connection info for the database for use in sql_academy.create_engine().
                                     dialect+driver://username:password@host:port/database
         """
+        if google_cloud_credentials == None:
+            self.gc_credentials = ''
+        else:
+            self.gc_credentials = google_cloud_credentials
 
-        self.gc_credentials = google_cloud_credentials
-        self.sql_connection = sql_connection
+        if sql_connection == None:
+            self.sql_connection = ''
+        else:
+            self.sql_connection = sql_connection
 
 
 
@@ -58,10 +64,8 @@ class SheetToSQL():
         Returns:
             - data: if Cell supplied is a string otherwise is a pandas dataframe
         """
-        if google_cloud_credentials = None:
-            print('ERROR: No Google Credentails Supplied')
-            print('Use update_google_details() function to add them them then try again')
-            break
+        if self.gc_credentials == '':
+            raise Exception('ERROR: No Google Credentails Supplied. Use update_google_details() function to add them them then try again.')
 
         ### USE SAVED CREDENTIALS TO CONNECT TO THE GOOGLE SHEETS API
         scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
@@ -96,10 +100,9 @@ class SheetToSQL():
             - df_result: a dataframe containing the result of the query
 
         """
-        if sql_connection = None:
-            print('ERROR: No SQL Database Supplied')
-            print('Use update_sql_connection() function to add them them then try again')
-            break
+        if self.sql_connection == '':
+            raise Exception('ERROR:No SQL Database Supplied. Use update_sql_connection() function to add them them then try again.')
+
 
         ## read sql method
         engine = create_engine(self.sql_connection)
@@ -123,10 +126,10 @@ class SheetToSQL():
         Returns:
             - none
         """
-        if sql_connection = None:
-            print('ERROR: No SQL Database Supplied')
-            print('Use update_sql_connection() function to add them them then try again')
-            break
+        if self.sql_connection == '':
+            raise Exception('ERROR:No SQL Database Supplied. Use update_sql_connection() function to add them them then try again.')
+
+
 
         ### CONNECT TO OUR DATA BASE AND REPLACE THE EXISTING SQL TABLE WITH OUR GSHEET DATA
         ### TODO: ALLOW TO APPEND DATA NOT JUST REPLACE
@@ -145,10 +148,9 @@ class SheetToSQL():
             - sheet_name (string): the name of the worksheet to update
             - starting_cell (string): the cell location to input the new data. Defualt at A2
         """
-        if google_cloud_credentials = None:
-            print('ERROR: No Google Credentails Supplied')
-            print('Use update_google_details() function to add them them then try again')
-            break
+        if self.gc_credentials == '':
+            raise Exception('ERROR: No Google Credentails Supplied. Use update_google_details() function to add them them then try again.')
+
 
         ### USE SAVED CREDENTIALS TO CONNECT TO THE GOOGLE SHEETS API
         scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
