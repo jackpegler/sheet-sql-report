@@ -5,7 +5,7 @@ Inspired by a need for this kind of inter-functionality I've seen in my own work
 * connect to google sheets or sql (tested on redshift, but should work for more) as datasource
 * `get_gheet_data(workbook_name, sheet_name, cell=False)` grab data from entire sheet or selected cell
 * `get_sql_data(self, query)` query the SQL database and return data as pandas dataframe
-* `data_to_sql(df, db_schema, db_table)` insert data into a sql database
+* `data_to_sql(df, db_schema, db_table, delete_old = True)` insert data into a sql database
 * `data_to_gsheet(self, df_data, workbook_name, sheet_name, starting_cell = 'A2')` insert data into a google sheet
 
 
@@ -60,7 +60,8 @@ To update the connection info, either if you didn't add at the start or want to 
 * **starting_cell** (string): the cell location to input the new data. Defualt at A2
 
 ### add data to sql
-`data_to_sql(df, db_schema, db_table)`
+`data_to_sql(df, db_schema, db_table, delete_old = True)`
 * **df (dataframe)**: data to feed to the database
 * **db_table (string)**: is name of the target table in the database
 * **db_schema (string)**: is name of the target schema in the database
+* **delete_old (bool)**: if True then will delete old data and replace with new, otherwise append

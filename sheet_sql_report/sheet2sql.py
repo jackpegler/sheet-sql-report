@@ -112,7 +112,7 @@ class SheetToSQL():
 
         return df_result
 
-    def data_to_sql(self, df, db_schema, db_table):
+    def data_to_sql(self, df, db_schema, db_table, delete_old = True):
         """Method to feed the data to mzee
 
         # https://stackoverflow.com/questions/48006551/speeding-up-pandas-dataframe-to-sql-with-fast-executemany-of-pyodbc
@@ -122,6 +122,7 @@ class SheetToSQL():
             - db_table (string): is name of the target table in the database
             - db_schema (string): is name of the target schema in the database
             - df (dataframe): data to feed to the database
+            - delete_old (bool): if True then will delete old data and replace with new, otherwise append
 
         Returns:
             - none
@@ -134,7 +135,10 @@ class SheetToSQL():
         ### CONNECT TO OUR DATA BASE AND REPLACE THE EXISTING SQL TABLE WITH OUR GSHEET DATA
         ### TODO: ALLOW TO APPEND DATA NOT JUST REPLACE
         engine = create_engine(self.sql_connection)
-        df.to_sql(db_table, schema=db_schema, con=engine, if_exists='replace', index=False, method="multi")
+        if delete_old:
+            df.to_sql(db_table, schema=db_schema, con=engine, if_exists='replace', index=False, method="multi")
+        else:
+            df.to_sql(db_table, schema=db_schema, con=engine, if_exists='append', index=False, method="multi")
         ### TODO: CLOSE THE SQL ENGINE? PANDAS PROBABLY DOES OR GIVE OPTION TO LEAVE OPEN? MAYBE SHOULD BE OTHER METHODS SO CAN USE SAME ENGINE TWICE
 
         print("Successfully added {0} records to {1}.{2}".format(len(df), db_schema, db_table))
