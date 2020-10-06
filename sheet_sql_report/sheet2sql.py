@@ -41,6 +41,7 @@ class SheetToSQL():
         self.gc_credentials = google_cloud_credentials
 
 
+
     def update_sql_connection(self, sql_connection):
         """Method to add or update the SQL connection info
         Args:
@@ -50,6 +51,7 @@ class SheetToSQL():
             - None
         """
         self.sql_connection = sql_connection
+
 
 
     def get_gheet_data(self, workbook_name, sheet_name, cell=False):
@@ -90,6 +92,31 @@ class SheetToSQL():
         ### RETURN A DATAFRAME FILLED WITH THE DATA FROM OUR GOOGLE SHEET
         return data
 
+
+
+    def sql_query(self, query):
+        """Method to connect to run SQL query string for INSERT, GRANT etc. User defined in sql_connection needs relevant permissions
+        Args:
+            - query: a string containing the query to execute
+
+        Returns:
+            - None: won't bring a result, need to use `get_sql_date`
+
+        """
+
+        if self.sql_connection == '':
+            raise Exception('ERROR:No SQL Database Supplied. Use update_sql_connection() function to add them them then try again.')
+
+        engine = create_engine(self.sql_connection)
+
+        ### EXECUTE THE QUERY
+        with engine.connect() as con:
+            con.execute(query)
+
+        print("Successfully executed query")
+
+
+
     def get_sql_data(self, query):
         """Method to connect to SQL database, query it and return the result
 
@@ -111,6 +138,8 @@ class SheetToSQL():
         print("Successfully pulled {0} records".format(len(df_result)))
 
         return df_result
+
+
 
     def data_to_sql(self, df, db_schema, db_table, delete_old = True):
         """Method to feed the data to mzee
@@ -142,6 +171,8 @@ class SheetToSQL():
         ### TODO: CLOSE THE SQL ENGINE? PANDAS PROBABLY DOES OR GIVE OPTION TO LEAVE OPEN? MAYBE SHOULD BE OTHER METHODS SO CAN USE SAME ENGINE TWICE
 
         print("Successfully added {0} records to {1}.{2}".format(len(df), db_schema, db_table))
+
+
 
     def data_to_gsheet(self, df_data, workbook_name, sheet_name, starting_cell = 'A2'):
         """Method to clear the data in a gsheet and update with new data

@@ -4,6 +4,7 @@ Inspired by a need for this kind of inter-functionality I've seen in my own work
 ## Features
 * connect to google sheets or sql (tested on redshift, but should work for more) as datasource
 * `get_gheet_data(workbook_name, sheet_name, cell=False)` grab data from entire sheet or selected cell
+* `sql_query(query)` run (no result) queries in a database
 * `get_sql_data(self, query)` query the SQL database and return data as pandas dataframe
 * `data_to_sql(df, db_schema, db_table, delete_old = True)` insert data into a sql database
 * `data_to_gsheet(self, df_data, workbook_name, sheet_name, starting_cell = 'A2')` insert data into a google sheet
@@ -49,15 +50,18 @@ To update the connection info, either if you didn't add at the start or want to 
 * **cell**: (OPTIONAL) a sting with the cell to pull the data from e.g. 'A2' otherwise pulls whole sheet
 
 ### Grab data from sql
+`sql_query(query)`
+* **query (string)** a string containing the query to run on the database w/o returning data. Careful of certain characters that need to be different for Python e.g. % -> %%
+
 `get_sql_data(query)`
-* **query**: a string containing the query to run on the database. Careful of certain characters that need to be different for Python e.g. % -> %%
+* **query (string)**: a string containing the query to run on the database and return data. Careful of certain characters that need to be different for Python e.g. % -> %%
 
 ### add data to google sheet
 `data_to_gsheet(df_data, workbook_name, sheet_name, starting_cell = 'A2')`
-* **df_data** (dataframe): the new data to add to the google sheet
-* **workbook_name** (string): the name of the workbook to update
-* **sheet_name** (string): the name of the worksheet to update
-* **starting_cell** (string): the cell location to input the new data. Defualt at A2
+* **df_data (dataframe)**: the new data to add to the google sheet
+* **workbook_name (string)**: the name of the workbook to update
+* **sheet_name (string)**: the name of the worksheet to update
+* **starting_cell (string)**: the cell location to input the new data. Defualt at A2
 
 ### add data to sql
 `data_to_sql(df, db_schema, db_table, delete_old = True)`
